@@ -1,19 +1,27 @@
 
-#include "list.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 
 
 typedef struct lnode lnode_t;
 struct lnode {
-
+    void *data;
+    lnode_t *next;
+    lnode_t *prev;
 };
 
 struct list {
-
+    lnode_t *head;
+    lnode_t *tail;
+    size_t length;
+    cmp_fn cmpfn;
+    
 };
 
 struct list_iter {
+    list_t *list;
+    lnode_t *node;
 
 };
 
