@@ -27,15 +27,43 @@ struct list_iter {
 
 
 static lnode_t *newnode(void *item) {
+    lnode_t *node = malloc(sizeof(lnode_t));
+    if(node == NULL){
+        return NULL;
+    }
+
+    node -> data = item;
+    node -> next = NULL;
+    node -> prev = NULL;
+
+    return node;
 
 }
 
 list_t *list_create(cmp_fn cmpfn) {
+    list_t *list = malloc(sizeof(list_t));
+    if(list == NULL){
+        return NULL;
+    }
+
+    list -> head = NULL;
+    list -> tail = NULL;
+    list -> cmpfn = cmpfn;
+    list -> length = 0;
+
+    return list;
 
 }
 
 void list_destroy(list_t *list, free_fn item_free) {
+    if(list == NULL){
+        return;
+    }
+    
+    lnode_t *curr = list -> head;
 
+
+    
 }
 
 size_t list_length(list_t *list) {
@@ -43,6 +71,18 @@ size_t list_length(list_t *list) {
 }
 
 int list_addfirst(list_t *list, void *item) {
+    lnode_t *node = newnode(item);
+
+    //Sette inn verdi
+    //
+    
+    if//null
+    list -> head = node;
+    list -> tail = node;
+
+    if//det er andre
+
+    //returnere 0 eller negativ error 
 
 }
 
