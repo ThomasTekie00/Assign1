@@ -1,7 +1,7 @@
 
 #include "../include/list.h"
 
-#include <cstddef>
+#include <stddef.h>
 #include <stdlib.h>
 
 #include "../include/printing.h"
@@ -28,6 +28,7 @@ struct list {
 struct list_iter {
     list_t *list;
     lnode_t *node;
+    
 
 };
 
@@ -83,7 +84,7 @@ void list_destroy(list_t *list, free_fn item_free) {
 
     free(list);
 
-    list -> length--;
+    
 
 
     
@@ -185,7 +186,7 @@ void *list_poplast(list_t *list) {
         return NULL;
     }
 
-    lnode_t *item = list -> tail -> data;
+    void *item = list -> tail -> data;
     lnode_t *temp = list -> tail;
 
     list -> tail = list -> tail -> prev;
@@ -226,41 +227,81 @@ int list_contains(list_t *list, void *item) {
     return 0;
   
 }
-
-void list_sort(list_t *list) {
+lnode_t *get_tail(list_t *list){
     if(list == NULL){
-        pr_error("Nothing to sort, list is empty");
-        return;
+        return NULL;
     }
 
-    //Find the middel of the list
-    int mid = list_length(list) / 2;
+    return list -> tail;
 
-    lnode_t *mid_node = list -> head;
-    for(int i = 0; i < mid; i++){
-        mid_node = mid_node -> next;
-    }
-   
-    
 }
+lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high);
+
+void sort_recursive(list_t* list, lnode_t* low, lnode_t* high);
+void list_sort(list_t *list);
+  
+    
+
 
 
 list_iter_t *list_createiter(list_t *list) {
+    list_iter_t *iter = malloc(sizeof(list_iter_t));
+    if(iter == NULL){
+        return NULL;
+    }
+    
+    iter -> list = list;
+    iter -> node = list -> head;
+
+    return iter;
 
 }
 
 void list_destroyiter(list_iter_t *iter) {
+    if(iter != NULL){
+        free(iter);
+    }
+    
     
 }
 
 int list_hasnext(list_iter_t *iter) {
+    //Check if iterator or current node is NULL
+    if(iter == NULL || iter -> node == NULL){
+        //Done with the round
+        return 0;
+    }
+    //More to iterate
+    return 1;
 
 }
 
+
 void *list_next(list_iter_t *iter) {
+    if(iter == NULL || iter -> node == NULL){
+        return NULL;
+    }
+
+    //Get the value from current node
+    void *item = iter -> node -> data;
+
+    //Move iter to next node
+    iter -> node = iter -> node -> next;
+
+    return item;
 
 }
 
 void list_resetiter(list_iter_t *iter) {
+    if(iter == NULL){
+        return;
+    }
+    //Reseter: Goes back to the head of the list
+    if(iter -> list != NULL){
+        iter -> node = iter -> list -> head;
+    }
+
+   // iter -> node = iter -> list -> head;    
+
     
 }
