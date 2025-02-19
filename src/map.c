@@ -1,6 +1,6 @@
 
-#include "map.h"
-#include "defs.h"
+#include "../include/map.h"
+#include "../include/defs.h"
 
 map_t *map_create(cmp_fn cmpfn, hash64_fn hashfn) {
 

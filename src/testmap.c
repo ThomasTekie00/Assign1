@@ -9,13 +9,13 @@
 
 #define LOG_LEVEL LOG_LEVEL_INFO
 
-#include "printing.h"
-#include "testutil.h"
-#include "tests.h"
-#include "defs.h"
-#include "common.h"
-#include "list.h"
-#include "map.h"
+#include "../include/printing.h"
+#include "../include/testutil.h"
+#include "../include/tests.h"
+#include "../include/defs.h"
+#include "../include/common.h"
+#include "../include/list.h"
+#include "../include/map.h"
 
 #include <stdio.h>
 #include <stdlib.h>

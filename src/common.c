@@ -3,8 +3,8 @@
  * Odin Bjerke <odin.bjerke@uit.no>
  */
 
-#include "common.h"
-#include "printing.h"
+#include "../include/common.h"
+#include "../include/printing.h"
 
 #include <string.h>
 #include <stdio.h>

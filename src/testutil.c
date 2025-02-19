@@ -3,7 +3,7 @@
  * Odin Bjerke <odin.bjerke@uit.no>
  */
 
-#include "testutil.h"
+#include "../include/testutil.h"
 
 #include <stdlib.h>
 #include <stdio.h>

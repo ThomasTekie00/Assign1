@@ -9,12 +9,12 @@
 
 #define LOG_LEVEL LOG_LEVEL_INFO
 
-#include "printing.h"
-#include "testutil.h"
-#include "tests.h"
-#include "defs.h"
-#include "common.h"
-#include "list.h"
+#include "../include/printing.h"
+#include "../include/testutil.h"
+#include "../include/tests.h"
+#include "../include/defs.h"
+#include "../include/common.h"
+#include "../include/list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -330,4 +330,8 @@ int test_interface_list() {
     pr_info("--- %s: passed ---\n\n", __func__);
 
     return 0;
+}
+
+int main(){
+    test_interface_list();
 }

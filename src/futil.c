@@ -3,10 +3,10 @@
  * Odin Bjerke <odin.bjerke@uit.no>
  */
 
-#include "futil.h"
-#include "common.h"
-#include "printing.h"
-#include "list.h"
+#include "../include/futil.h"
+#include "../include/common.h"
+#include "../include/printing.h"
+#include "../include/list.h"
 
 #include <stdio.h>
 #include <stdlib.h>

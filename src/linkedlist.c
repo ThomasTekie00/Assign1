@@ -234,6 +234,8 @@ static void swap(lnode_t *a, lnode_t *b){
     b -> data = temp;
 
 }
+
+//Bruke cmpfn for å kutte liste i 2 for å legge til pivot #Eller bruke rndint og time
 static lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high){
     //Velge pivot, den siste i listen
     void *pivot = high -> data;
@@ -265,15 +267,14 @@ static lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high){
       return i;
     
 
-    
-
-
 
 }
 
 static void sort_recursive(list_t* list, lnode_t* low, lnode_t* high);
 
-void list_sort(list_t *list);
+void list_sort(list_t *list){
+    //Gjøres
+}
   
     
 
