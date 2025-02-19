@@ -227,17 +227,52 @@ int list_contains(list_t *list, void *item) {
     return 0;
   
 }
-lnode_t *get_tail(list_t *list){
-    if(list == NULL){
-        return NULL;
-    }
 
-    return list -> tail;
+static void swap(lnode_t *a, lnode_t *b){
+    void *temp = a -> data;
+    a -> data = b -> data;
+    b -> data = temp;
 
 }
-lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high);
+static lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high){
+    //Velge pivot, den siste i listen
+    void *pivot = high -> data;
 
-void sort_recursive(list_t* list, lnode_t* low, lnode_t* high);
+    //Setter j som det som kommer før første i listen
+    lnode_t *i = low -> prev;
+
+    //J blir første i listen
+    lnode_t *j = low;
+
+    //Loopen for byttet
+    while(j != high){
+        //Dersom j er mindre enn pivot
+        if (list -> cmpfn (j -> data, pivot) < 0){
+            if ( i == NULL){
+                i = low;
+            } else {
+                i = i -> next;
+            }
+
+            swap(i,j);
+
+        }
+        j = j -> next;
+    
+      }
+
+      swap(i, high);
+      return i;
+    
+
+    
+
+
+
+}
+
+static void sort_recursive(list_t* list, lnode_t* low, lnode_t* high);
+
 void list_sort(list_t *list);
   
     
