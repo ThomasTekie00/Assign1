@@ -235,38 +235,44 @@ static void swap(lnode_t *a, lnode_t *b){
 
 }
 
+static lnode_t *getmiddle(lnode_t *head, lnode_t *tail){
+    lnode_t *fast = head;
+    lnode_t *slow = head;
+
+
+    while (fast != tail && fast -> next != tail){
+        slow = slow -> next;
+        fast = fast -> next -> next;
+    }
+    return slow -> data;
+}
+
 //Bruke cmpfn for å kutte liste i 2 for å legge til pivot #Eller bruke rndint og time
-static lnode_t *partition(list_t *list, lnode_t *low, lnode_t *high){
+static lnode_t *partition(list_t *list, lnode_t *head, lnode_t *tail, cmp_fn cmpfn){
+
     //Velge pivot, den siste i listen
-    void *pivot = high -> data;
+    lnode_t *pivot = getmiddle(head, tail);
 
-    //Setter j som det som kommer før første i listen
-    lnode_t *i = low -> prev;
+    lnode_t *curr = head;
+    lnode_t *pre = head;
 
-    //J blir første i listen
-    lnode_t *j = low;
+    while(curr != NULL){
+        if(list -> cmpfn(curr -> data, pivot -> data) < 0){
+            int temp = curr -> data;
+            curr -> data = pre -> data;
+            pre -> data = temp;
 
-    //Loopen for byttet
-    while(j != high){
-        //Dersom j er mindre enn pivot
-        if (list -> cmpfn (j -> data, pivot) < 0){
-            if ( i == NULL){
-                i = low;
-            } else {
-                i = i -> next;
-            }
-
-            swap(i,j);
-
+            pre = pre -> next;
         }
-        j = j -> next;
-    
-      }
+        curr = curr -> next;
+    }
+    int temp = pivot -> data;
+    pivot -> data = pre -> data;
+    pre -> data = temp;
 
-      swap(i, high);
-      return i;
-    
+    return pre;
 
+    
 
 }
 
