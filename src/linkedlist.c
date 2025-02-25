@@ -235,52 +235,124 @@ static void swap(lnode_t *a, lnode_t *b){
 
 }
 
-static lnode_t *getmiddle(lnode_t *head, lnode_t *tail){
-    lnode_t *fast = head;
-    lnode_t *slow = head;
-
-
-    while (fast != tail && fast -> next != tail){
-        slow = slow -> next;
-        fast = fast -> next -> next;
+static lnode_t *list_tail(list_t *list, lnode_t *head, lnode_t *tail){
+    if(list == NULL || list->head == NULL){
+        pr_error("Cant give tail since list is empty!");
+        return NULL;
     }
-    return slow -> data;
+
+    return list->tail;
 }
 
-//Bruke cmpfn for å kutte liste i 2 for å legge til pivot #Eller bruke rndint og time
-static lnode_t *partition(list_t *list, lnode_t *head, lnode_t *tail, cmp_fn cmpfn){
 
-    //Velge pivot, den siste i listen
-    lnode_t *pivot = getmiddle(head, tail);
-
-    lnode_t *curr = head;
-    lnode_t *pre = head;
-
-    while(curr != NULL){
-        if(list -> cmpfn(curr -> data, pivot -> data) < 0){
-            int temp = curr -> data;
-            curr -> data = pre -> data;
-            pre -> data = temp;
-
-            pre = pre -> next;
-        }
-        curr = curr -> next;
+static lnode_t *getmiddle(lnode_t *head, lnode_t *tail){
+    if(head == NULL || tail == NULL){
+        pr_error("List is empty");
+        return head;
     }
-    int temp = pivot -> data;
-    pivot -> data = pre -> data;
-    pre -> data = temp;
 
-    return pre;
+    lnode_t *slow = head;
+    lnode_t *fast = head;
 
+    while(fast != tail && fast -> next != NULL && fast -> next != tail){
+            fast = fast -> next -> next;
+            slow = slow -> next; 
+
+            if(fast == NULL){
+                break;
+            }
     
 
+    }
+    return slow;//pass
 }
+  
 
-static void sort_recursive(list_t* list, lnode_t* low, lnode_t* high);
+//Bruke cmpfn for å kutte liste i 2 for å legge til pivot #Eller bruke rndint og time
+static lnode_t *partition(lnode_t *head, lnode_t *tail, cmp_fn cmpfn){
+    if(head == NULL || tail == NULL || cmpfn == NULL){
+        return NULL;
+    }
+
+    lnode_t *pivot = getmiddle(head, tail);
+    if(pivot == NULL){
+        return NULL;
+    }
+
+    swap(pivot, tail);
+
+    void *pivotdata = tail -> data;
+    if(pivotdata == NULL){
+        return NULL;
+    }
+
+    lnode_t *i = NULL;
+    lnode_t *j = head;
+
+    while(j != tail && j != NULL){
+        if (j -> data != NULL && cmpfn(j -> data, pivotdata) < 0) {
+            if(i == NULL){
+                i = head;
+            }else{
+                i = i -> next;
+                
+            }
+            if(i != j){
+                swap(i, j);
+            }
+            
+        }
+        j = j -> next;
+    }
+
+    if(i == NULL){
+        i = head;
+    }else{
+        i= i -> next;
+    }
+
+    if(i != tail){
+        swap(i,tail);
+    }
+    
+
+    return i;
+    
+    
+}
+    
+   
+    
+
+static void sort_recursive(list_t *list, lnode_t *head, lnode_t *tail, cmp_fn cmpfn){
+    if(head == NULL || head == tail){
+        return;
+    }
+
+    lnode_t *pivot = partition(head, tail, cmpfn);
+
+    if(pivot != NULL && pivot -> prev != NULL){
+        sort_recursive(list, head, pivot -> prev, cmpfn);
+    }
+
+    if(pivot != NULL && pivot -> next != NULL){
+        sort_recursive(list, pivot -> next, tail, cmpfn);
+
+    }
+    //pass
+}
 
 void list_sort(list_t *list){
-    //Gjøres
+    if(list == NULL || list -> head == NULL){
+        return;
+    }
+
+    sort_recursive(list, list -> head, list -> tail, list -> cmpfn);
+
 }
+    //Gjøres
+
+
   
     
 
