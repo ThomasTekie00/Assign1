@@ -273,3 +273,6 @@ int test_interface_map() {
 
     return 0;
 }
+int main(){
+    test_interface_map();
+}
